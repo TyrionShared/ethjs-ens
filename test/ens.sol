@@ -257,7 +257,7 @@ contract DeployENS {
     ENS public ens;
 
     function DeployENS() {
-        var tld = sha3('eth');
+        var tld = sha3('wan');
         var tldnode = sha3(bytes32(0), tld);
         ens = new ENS(this);
         var resolver = new PublicResolver(ens);
@@ -273,10 +273,10 @@ contract DeployENS {
         // ournode is equal to the node for the reverse registrar
 
         ens.setResolver(ournode, resolver);
-        resolver.setName(ournode, "deployer.eth");
+        resolver.setName(ournode, "deployer.wan");
         resolver.setABI(ournode, 2, hex"789c754e390ac33010fccbd4aa0249a1af98141b2183c0590969b630c27f8f6c12838b74c3dc5347c8da284a78568b0e498bb1c14f4f079577840763231cb2f12bf59f3258ae65479694b7fb03db881559e5b50c7696a5c5d3329b06a6acd85cbfccfcf11fcfaa05e63a6a3f5f113a4a");
 
-        // Set foo.eth up with a resolver, ABI, and addr record
+        // Set foo.wan up with a resolver, ABI, and addr record
         ens.setSubnodeOwner(0, tld, this);
         ens.setSubnodeOwner(tldnode, sha3('foo'), this);
         var fooDotEth = sha3(tldnode, sha3('foo'));
@@ -285,13 +285,13 @@ contract DeployENS {
         resolver.setABI(fooDotEth, 1, '[{"constant":true,"inputs":[],"name":"test2","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"inputs":[],"payable":false,"type":"constructor"}]');
         reverseregistrar.claim(address(this));
 
-        // Set bar.eth up with a resolver but no addr record, owned by the sender
+        // Set bar.wan up with a resolver but no addr record, owned by the sender
         ens.setSubnodeOwner(tldnode, sha3('bar'), this);
         var barDotEth = sha3(tldnode, sha3('bar'));
         ens.setResolver(barDotEth, resolver);
         ens.setOwner(barDotEth, msg.sender);
 
-        // Set up baz.eth with a resolver and addr record
+        // Set up baz.wan with a resolver and addr record
         ens.setSubnodeOwner(tldnode, sha3('baz'), this);
         var bazDotEth = sha3(tldnode, sha3('baz'));
         ens.setResolver(bazDotEth, resolver);

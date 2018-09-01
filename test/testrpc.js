@@ -8,19 +8,17 @@ const fs = require('fs');
 const solc = require('solc');
 const TestRPC = require('ethereumjs-testrpc');
 const ENS = require('../')
-const namehash = require('eth-ens-namehash')
+const namehash = require('wan-wns-namehash')
 
 const emptyAddress = '0x0000000000000000000000000000000000000000'
-const notFound = 'ENS name not defined.'
-const badName = 'Illegal Character for ENS.'
+const notFound = 'WNS name not defined.'
+const badName = 'Illegal Character for WNS.'
 
 const provider = TestRPC.provider()
 const eth = new Eth(provider)
 const web3 = new Web3(provider)
 const contract = new EthContract(eth)
 
-const registryAbi = require('../abis/registry.json')
-const resolverAbi = require('../abis/resolver.json')
 const source = fs.readFileSync(__dirname + '/ens.sol').toString(); const compiled = solc.compile(source, 1)
 const deployer = compiled.contracts[':DeployENS']
 let deploy, ensRoot, ens, accounts, deployRoot
@@ -66,7 +64,7 @@ test('setup', { timeout: 5000 }, function (t) {
 })
 
 test('#getResolver() with invalid name should throw', function (t) {
-  ens.getResolver('havasupai.eth')
+  ens.getResolver('short.wan')
   .catch((result) => {
     t.equal(result.message, notFound)
     t.end()
@@ -74,7 +72,7 @@ test('#getResolver() with invalid name should throw', function (t) {
 })
 
 test('#getResolver() should get resolver addresses', function (t) {
-  ens.getResolver('foo.eth')
+  ens.getResolver('foo.wan')
   .then((result) => {
     t.notEqual(result, emptyAddress)
     t.end()
@@ -82,7 +80,7 @@ test('#getResolver() should get resolver addresses', function (t) {
 })
 
 test('#getResolverAddress with valid name returns address.', function (t) {
-  ens.getResolverAddress('foo.eth')
+  ens.getResolverAddress('foo.wan')
   .then((result) => {
     t.notEqual(result, emptyAddress)
     t.end()
@@ -90,7 +88,7 @@ test('#getResolverAddress with valid name returns address.', function (t) {
 })
 
 test('#getResolverForNode with no hex prefix adds it.', function (t) {
-  const node = namehash('foo.eth').substr(2)
+  const node = namehash.hash('foo.wan').substr(2)
   ens.getResolverForNode(node)
   .then((result) => {
     t.notEqual(result, emptyAddress)
@@ -99,7 +97,7 @@ test('#getResolverForNode with no hex prefix adds it.', function (t) {
 })
 
 test('#lookup() should get resolver addresses', function (t) {
-  ens.lookup('foo.eth')
+  ens.lookup('foo.wan')
   .then((result) => {
     t.notEqual(result, emptyAddress)
     t.end()
@@ -107,15 +105,15 @@ test('#lookup() should get resolver addresses', function (t) {
 })
 
 test('#lookup() name with no resolver should throw', function (t) {
-  ens.lookup('cardassian.eth')
+  ens.lookup('cardassian.wan')
   .catch((reason) => {
-    t.equal(reason.message, 'ENS name not defined.')
+    t.equal(reason.message, 'WNS name not defined.')
     t.end()
   })
 })
 
 test('#lookup() with unregistered should throw', function (t) {
-  ens.lookup('blargadegh.eth')
+  ens.lookup('blargadegh.wan')
   .catch((reason) => {
     t.equal(reason.message, notFound)
     t.end()
@@ -125,7 +123,7 @@ test('#lookup() with unregistered should throw', function (t) {
 test('#reverse() on deployRoot', function (t) {
   ens.reverse(deployRoot)
   .then((name) => {
-    t.equal(name, 'deployer.eth')
+    t.equal(name, 'deployer.wan')
     t.end()
   })
 })
@@ -166,7 +164,7 @@ test('#reverse() throws on unknown address.', function (t) {
 
 test('#getNamehash() with good name', function (t) {
   t.plan(1)
-  ens.getNamehash('dan.eth')
+  ens.getNamehash('dan.wan')
   .then((hash) => {
     t.ok(hash, 'success')
   })
@@ -177,7 +175,7 @@ test('#getNamehash() with good name', function (t) {
 
 test('#getNamehash() with bad name', function (t) {
   t.plan(1)
-  ens.getNamehash('dino dan.eth')
+  ens.getNamehash('dino dan.wan')
   .then((hash) => {
     t.ok(false, 'should not resolve')
   })
@@ -188,7 +186,7 @@ test('#getNamehash() with bad name', function (t) {
 
 test('#lookup() with illegal char throws', function (t) {
   t.plan(1)
-  ens.lookup('dino dan.eth')
+  ens.lookup('dino dan.wan')
   .catch((reason) => {
     t.ok(reason)
     t.end()

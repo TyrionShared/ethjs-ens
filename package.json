@@ -1,7 +1,7 @@
 {
-  "name": "ethjs-ens",
+  "name": "wanjs-wns",
   "version": "2.0.1",
-  "description": "An ENS interface module built on EthJS.",
+  "description": "An WNS interface module built on WanJS.",
   "main": "index.js",
   "scripts": {
     "lint": "eslint index.js",
@@ -11,23 +11,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/ethjs/ethjs-ens.git"
+    "url": "git+ssh://git@github.com/WanJS/wanjs-wns.git"
   },
   "keywords": [
-    "Ethereum",
+    "Wanchain",
     "DNS",
-    "ENS",
-    "EthJS"
+    "WNS",
+    "WanJS"
   ],
-  "author": "Dan Finlay",
+  "author": "Tyrion70",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ethjs/ethjs-ens/issues"
+    "url": "https://github.com/WanJS/wanjs-wns/issues"
   },
-  "homepage": "https://github.com/ethjs/ethjs-ens#readme",
+  "homepage": "https://github.com/WanJS/wanjs-wns#readme",
   "dependencies": {
-    "eth-ens-namehash": "^1.0.2",
-    "ethereum-ens-network-map": "^1.0.0",
+    "wan-wns-namehash": "^2.0.10",
+    "wanchain-wns-network-map": "^1.0.2",
     "ethjs-contract": "^0.1.7",
     "ethjs-query": "^0.2.4"
   },

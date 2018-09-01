@@ -1,19 +1,19 @@
 // External Deps
 const Eth = require('ethjs-query')
 const EthContract = require('ethjs-contract')
-const namehash = require('eth-ens-namehash')
+const namehash = require('wan-wns-namehash')
 
 // ABIs
 const registryAbi = require('./abis/registry.json')
 const resolverAbi = require('./abis/resolver.json')
 
 // Map network to known ENS registries
-const networkMap = require('ethereum-ens-network-map')
+const networkMap = require('wanchain-wns-network-map')
 const emptyHash = '0x0000000000000000000000000000000000000000000000000000000000000000'
 const emptyAddr = '0x0000000000000000000000000000000000000000'
 
-const NotFoundError = new Error('ENS name not defined.')
-const BadCharacterError = new Error('Illegal Character for ENS.')
+const NotFoundError = new Error('WNS name not defined.')
+const BadCharacterError = new Error('Illegal Character for WNS.')
 
 class Ens {
   constructor (opts = {}) {
@@ -58,7 +58,7 @@ class Ens {
 
   getNamehash (name) {
     try {
-      return Promise.resolve(namehash(name))
+      return Promise.resolve(namehash.hash(name))
     } catch (e) {
       return Promise.reject(BadCharacterError)
     }
@@ -134,7 +134,7 @@ class Ens {
     }
 
     const name = `${address.toLowerCase()}.addr.reverse`
-    const node = namehash(name)
+    const node = namehash.hash(name)
     return this.getNamehash(name)
       .then(node => this.getResolverForNode(node))
       .then(resolver => resolver.name(node))

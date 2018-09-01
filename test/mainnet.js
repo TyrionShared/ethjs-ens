@@ -1,7 +1,7 @@
 const test = require('tape')
 const HttpProvider = require('ethjs-provider-http')
-const provider = new HttpProvider('https://mainnet.infura.io')
-const notFound = 'ENS name not defined.'
+const provider = new HttpProvider('https://mywanwallet.nl/api')
+const notFound = 'WNS name not defined.'
 
 const ENS = require('../')
 const ens = new ENS({ provider, network: '1' })
@@ -19,12 +19,12 @@ test('not providing a provider throws', function (t) {
   })
 })
 
-test('lookup apt-get.eth', function (t) {
+test('lookup tyrion70.wan', function (t) {
   t.plan(1)
 
-  ens.lookup('apt-get.eth')
+  ens.lookup('tyrion70.wan')
   .then((address) => {
-    const expected = '0xd1220a0cf47c7b9be7a2e6ba89f429762e7b9adb'
+    const expected = '0x664949908413517b993c6784b44428d080d1a1fa'
     t.equal(address, expected)
     t.end()
   })
@@ -33,10 +33,10 @@ test('lookup apt-get.eth', function (t) {
   })
 })
 
-test('getOwner for nobodywantsthisdomain.eth', function (t) {
+test('getOwner for nobodywantsthisdomain.wan', function (t) {
   t.plan(1)
 
-  ens.getOwner('nobodywantsthisdomain.eth')
+  ens.getOwner('nobodywantsthisdomain.wan')
   .then((owner) => {
     console.log('it is owned ', owner)
     t.ok(owner)
@@ -65,13 +65,13 @@ test('getResolver empty name', function (t) {
   })
 })
 
-test('reverse alex.vandesande.eth address should return address', function (t) {
+test('reverse tyrion70.wan address should return address', function (t) {
   t.plan(1)
 
-  const address = '0xd1220a0cf47c7b9be7a2e6ba89f429762e7b9adb'
+  const address = '0xE0155E9233B1502d4b32840f7E0A8DeB6C37f505'
   ens.reverse(address)
   .then((name) => {
-    const expected = 'alex.vandesande.eth'
+    const expected = 'tyrion70.wan'
     t.equal(name, expected)
   })
   .catch((reason) => {
@@ -79,19 +79,19 @@ test('reverse alex.vandesande.eth address should return address', function (t) {
   })
 })
 
-test('lookup nobodywantsthisdomain.eth address', function (t) {
+test('lookup nobodywantsthisdomain.wan address', function (t) {
   t.plan(1)
 
-  ens.lookup('nobodywantsthisdomain.eth')
+  ens.lookup('nobodywantsthisdomain.wan')
   .catch((reason) => {
     t.equal(reason.message, notFound)
   })
 })
 
-test('lookup bar.eth address', function (t) {
+test('lookup bar.wan address', function (t) {
   t.plan(1)
 
-  ens.lookup('bar.eth')
+  ens.lookup('bar.wan')
   .then((address) => {
     t.equal(address, '0xd0b85aad460f5835c2349fbdd065b2389c921ce1')
   })
