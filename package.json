@@ -33,6 +33,7 @@
     "ethjs-query": "^0.2.4"
   },
   "devDependencies": {
+    "browserify": "^16.2.2",
     "coveralls": "^3.0.2",
     "eslint": "^4.7.1",
     "ethjs": "^0.2.5",
