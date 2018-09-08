@@ -1,11 +1,11 @@
-# EthJS ENS
+# WanJS WNS
 
-[![CircleCI](https://circleci.com/gh/ethjs/ethjs-ens.svg?style=svg)](https://circleci.com/gh/ethjs/ethjs-ens)
-[![Coverage Status](https://coveralls.io/repos/github/ethjs/ethjs-ens/badge.svg?branch=master)](https://coveralls.io/github/ethjs/ethjs-ens?branch=master)
+[![CircleCI][circle-image]][circle-url]
+[![Coverage Status][coveralls-image]][coveralls-url]
+[![dependency status][dep-image]][dep-url]
+[![NPM][npm-image]][npm-url]
 
-A convenience interface for using the Ethereum Name Service, based on the [EthJS contract abstraction](https://github.com/ethjs/ethjs-contract).
-
-[Live Demo](https://ethjs.github.io/ethjs-ens)
+A convenience interface for using the Wanchain Name Service, based on the [WanJS contract abstraction](https://github.com/WanJS/wanjs-contract).
 
 ## Installation
 
@@ -16,14 +16,14 @@ Install from npm:
 ## Usage
 
 ```javascript
-const ENS = require('ethjs-ens')
-const HttpProvider = require('ethjs-provider-http')
+const ENS = require('wanjs-wns')
+const HttpProvider = require('wanjs-provider-http')
 
 // For MetaMask or Mist compatibility:
 if (typeof window === 'object' && typeof window.web3 !== 'undefined') {
   setupEns(web3.currentProvider)
 } else {
-  const provider = new HttpProvider('https://ropsten.infura.io')
+  const provider = new HttpProvider('https://mywanwallet.nl/api')
   setupEns(provider)
 }
 
@@ -33,9 +33,9 @@ function setupEns (provider) {
   // either a network or registryAddress param
   const ens = new ENS({ provider, network: '3' })
 
-  ens.lookup('vitalik.eth')
+  ens.lookup('tyrion70.wan')
   .then((address) => {
-    const expected = '0x5f8f68a0d1cbc75f6ef764a44619277092c32df0'
+    const expected = '0x664949908413517B993c6784b44428d080D1a1Fa'
 
     if (address === expected) {
       alert("That's how you do it!")
@@ -53,14 +53,14 @@ function setupEns (provider) {
 
 ### ens.lookup( name )
 
-Takes a valid [ENS](https://ens.readthedocs.io/en/latest/introduction.html) name, like `vitalik.eth`, or `some.specialname.eth`.
+Takes a valid [ENS](https://ens.readthedocs.io/en/latest/introduction.html) name, like `jacklu.wan`, or `some.specialname.wan`.
 
 Returns a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) that resolves to a hex-prefixed hexadecimal string for the resolved address.
 
 If a matching name can not be found, will throw:
 
 ```javascript
-new Error('ENS name not found.')
+new Error('WNS name not found.')
 ```
 
 ### ens.reverse( address )
@@ -71,7 +71,7 @@ Returns a promise that resolves a string if a name exists, or throws if it does 
 
 ### ens.registry
 
-An [ethjs contract](https://github.com/ethjs/ethjs-ens) instance initialized for the specified network's address.
+An [wanjs contract](https://github.com/WanJS/wanjs-ens) instance initialized for the specified network's address.
 
 Implements the registry interface specified in [EIP 137](https://github.com/ethereum/EIPs/issues/137):
 
@@ -90,7 +90,7 @@ function ttl(bytes32 node) constant returns (uint64);
 Network support is added by adding a registry for that network to the [network map](./lib/network-map.json).
 
 - Main net (id 1)
-- Ropsten (id 3)
+- Testnet (id 3)
 
 ## Licence
 
@@ -119,3 +119,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
+
+[circle-image]: https://circleci.com/gh/WanJS/wanjs-wns.svg?style=svg
+[circle-url]: https://circleci.com/gh/WanJS/wanjs-wns
+[dep-image]: https://david-dm.org/WanJS/wanjs-wns.svg
+[dep-url]: https://david-dm.org/WanJS/wanjs-wns
+[coveralls-image]: https://coveralls.io/repos/github/WanJS/wanjs-wns/badge.svg?branch=dev
+[coveralls-url]: https://coveralls.io/github/WanJS/wanjs-wns?branch=dev
+[npm-image]: http://img.shields.io/npm/v/wanjs-wns.svg
+[npm-url]: https://www.npmjs.org/package/wanjs-wns
