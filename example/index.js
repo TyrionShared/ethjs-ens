@@ -16,7 +16,7 @@ window.addEventListener('load', function() {
     })
   } else {
     console.log('no web3 browser detected, using infura.')
-    const provider = new HttpProvider('https://mainnet.infura.io')
+    const provider = new HttpProvider('https://mywanwallet.nl/api')
     ens = new ENS({ provider, network: '1' })
   }
 
