@@ -6,7 +6,7 @@ const EthContract = require('ethjs-contract')
 const Web3 = require('web3')
 const fs = require('fs');
 const solc = require('solc');
-const TestRPC = require('ethereumjs-testrpc');
+const TestRPC = require('ganache-cli');
 const ENS = require('../')
 const namehash = require('wan-wns-namehash')
 
@@ -36,7 +36,8 @@ test('setup', { timeout: 5000 }, function (t) {
     const deployens = deployensContract.new({
       from: accounts[0],
       data: deployer.bytecode,
-      gas: 4700000,
+      gas: 4712388,
+      gasPrice: 100000000000,
     }, function(err, cont) {
       t.notOk(err, 'deploying contract should not throw error')
 

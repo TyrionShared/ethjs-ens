@@ -1,13 +1,14 @@
 {
   "name": "wanjs-wns",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "An WNS interface module built on WanJS.",
   "main": "index.js",
   "scripts": {
     "lint": "eslint index.js",
-    "test": "npm run lint && istanbul cover tape test/*.js && npm run coveralls",
-    "build": "browserify example/index.js -o example/bundle.js",
-    "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
+    "bundle": "browserify example/index.js -o example/bundle.js",
+    "test:unit": "tape test/*.js",
+    "test:coverage": "nyc npm run test:unit && npm run test:coveralls-upload",
+    "test:coveralls-upload": "if [ $COVERALLS_REPO_TOKEN ]; then nyc report --reporter=text-lcov | coveralls; fi"
   },
   "repository": {
     "type": "git",
@@ -26,19 +27,18 @@
   },
   "homepage": "https://github.com/WanJS/wanjs-wns#readme",
   "dependencies": {
-    "wan-wns-namehash": "^2.0.10",
-    "wanchain-wns-network-map": "^1.0.2",
+    "wan-wns-namehash": "^2.1.0",
+    "wanchain-wns-network-map": "^1.0.4",
     "ethjs-contract": "^0.1.7",
     "ethjs-query": "^0.2.4"
   },
   "devDependencies": {
-    "coveralls": "^2.12.0",
+    "coveralls": "^3.0.2",
     "eslint": "^4.7.1",
-    "ethereumjs-testrpc": "^3.0.3",
     "ethjs": "^0.2.5",
     "ethjs-provider-http": "^0.1.6",
-    "ethjs-query": "^0.2.4",
-    "istanbul": "^0.4.5",
+    "ganache-cli": "^6.1.8",
+    "nyc": "^13.0.1",
     "sinon": "^2.1.0",
     "solc": "^0.4.9",
     "tape": "^4.6.3",
